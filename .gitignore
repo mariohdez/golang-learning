@@ -22,3 +22,7 @@ go.work
 
 # The hello world binary
 ch1/hello_world
+
+
+.vscode
+!.vscode/launch.json
