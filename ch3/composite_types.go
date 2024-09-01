@@ -4,6 +4,7 @@ import "fmt"
 
 func main() {
 	exerciseOne()
+	exerciseTwo()
 }
 
 func exerciseOne() {
@@ -16,4 +17,10 @@ func exerciseOne() {
 	fmt.Println(slice1)
 	fmt.Println(slice2)
 	fmt.Println(slice3)
+}
+
+func exerciseTwo() {
+	message := "Hi 👩 and 👨"
+	runes := []rune(message)
+	fmt.Println(string(runes[3]))
 }
