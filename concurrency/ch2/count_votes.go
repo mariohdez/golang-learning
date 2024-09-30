@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
-	"time"
 )
 
 func main() {
 	count := 0
 	finished := 0
 	var mu sync.Mutex
+	cond := sync.NewCond(&mu)
 	for i := 0; i < 10; i++ {
 		go func() {
 			vote := requestVote()
@@ -19,25 +19,21 @@ func main() {
 				count++
 			}
 			finished++
+			cond.Broadcast()
 			mu.Unlock()
 		}()
 	}
 
-	// Slightly improve this waiting condition by putting the main thread to sleep for 50 ms.
-	for {
-		mu.Lock()
-		if count >= 5 || finished == 10 {
-			mu.Unlock()
-			break
-		}
-		mu.Unlock()
-		time.Sleep(50 * time.Millisecond)
+	mu.Lock()
+	for count < 5 && finished != 10 {
+		cond.Wait()
 	}
 	if count >= 5 {
-		fmt.Println("recieved 5+ votes")
+		fmt.Println("recieved 5+ votes!")
 	} else {
-		fmt.Println("lost")
+		fmt.Println("lost.")
 	}
+	mu.Unlock()
 }
 
 func requestVote() bool {
