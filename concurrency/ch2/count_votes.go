@@ -25,6 +25,7 @@ func main() {
 	for {
 		mu.Lock()
 		if count >= 5 || finished == 10 {
+			mu.Unlock()
 			break
 		}
 		mu.Unlock()
