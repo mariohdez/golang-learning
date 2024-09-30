@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -22,8 +23,7 @@ func main() {
 		}()
 	}
 
-	// We are burning up a buncha CPU.
-	// We are consistenly wasting CPU cycles to check updates on count+finished.
+	// Slightly improve this waiting condition by putting the main thread to sleep for 50 ms.
 	for {
 		mu.Lock()
 		if count >= 5 || finished == 10 {
@@ -31,6 +31,7 @@ func main() {
 			break
 		}
 		mu.Unlock()
+		time.Sleep(50 * time.Millisecond)
 	}
 	if count >= 5 {
 		fmt.Println("recieved 5+ votes")
