@@ -22,6 +22,8 @@ func main() {
 		}()
 	}
 
+	// We are burning up a buncha CPU.
+	// We are consistenly wasting CPU cycles to check updates on count+finished.
 	for {
 		mu.Lock()
 		if count >= 5 || finished == 10 {
