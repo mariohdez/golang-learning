@@ -13,6 +13,6 @@ func main() {
 		fmt.Printf("flag=%v", flag)
 	}()
 	start := time.Now()
-	c <- true // blocks until other goroutine receives
+	c <- true // send is blocked until other goroutine receives
 	fmt.Printf("send took %v\n", time.Since(start))
 }
