@@ -6,6 +6,7 @@ import (
 	"sync"
 )
 
+// TODO: Spend more time on Sync.Cond
 func main() {
 	count := 0
 	finished := 0
